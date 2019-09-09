@@ -2,6 +2,7 @@
 
 package lesson1.task1
 
+import lesson9.task2.sumNeighbours
 import kotlin.math.*
 
 /**
@@ -104,7 +105,7 @@ fun thirdDigit(number: Int): Int = number/100%10 //TODO()
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int =  //TODO()
- (hoursArrive*60 + minutesArrive) - (hoursDepart*60 + minutesDepart)
+(hoursArrive*60 + minutesArrive) - (hoursDepart*60 + minutesDepart)
 
 /**
  * Простая
@@ -113,7 +114,8 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
+fun accountInThreeYears(initial: Int, percent: Int): Double = ((initial*percent/100.0+initial)*percent/100+(initial*percent/100.0+initial))*percent/100+((initial*percent/100.0+initial)*percent/100+(initial*percent/100.0+initial)) //TODO()
+
 
 /**
  * Простая
@@ -121,4 +123,4 @@ fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = TODO()
+fun numberRevert(number: Int): Int = number%10*100+number/10%10*10+number/100 //TODO()
