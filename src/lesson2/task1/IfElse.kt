@@ -84,6 +84,7 @@ fun timeForHalfWay(
     t3: Double, v3: Double
 ): Double = TODO()
 
+
 /**
  * Простая
  *
@@ -120,6 +121,10 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int = TODO()
+//{
+  //  if ((kingX == rookX) || (kingY == rookY)) return (1)
+   // return (0)
+//}
 
 /**
  * Простая
@@ -140,3 +145,4 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+
