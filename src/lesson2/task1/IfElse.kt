@@ -63,12 +63,13 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String  //TODO()
-{
-    if ((age >= 10 && age < 21) || (age % 10 > 4 && age % 10 <= 9) || (age > 110 && age < 121) || (age % 10 == 0)) return "${age} лет"
+fun ageDescription(age: Int): String {
+    if ((age >= 10 && age < 21) || (age % 10 > 4 && age % 10 <= 9)
+        || (age > 110 && age < 121) || (age % 10 == 0)
+    ) return "${age} лет"
     if (age % 10 == 1) return "${age} год"
-    if (age % 10 > 1 && age % 10 < 5) return "${age} года"
-    return "1"
+    //if (age % 10 > 1 && age % 10 < 5) return "${age} года"
+    return "${age} года"
 }
 
 /**
@@ -98,9 +99,10 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int //TODO()
-{
-    if (((kingX == rookX2) || (kingY == rookY2)) && ((kingX == rookX1) || (kingY == rookY1))) return (3)
+): Int {
+    if (((kingX == rookX2) || (kingY == rookY2)) && ((kingX == rookX1)
+                || (kingY == rookY1))
+    ) return (3)
     if ((kingX == rookX1) || (kingY == rookY1)) return (1)
     if ((kingX == rookX2) || (kingY == rookY2)) return (2)
     return (0)
@@ -121,10 +123,7 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int = TODO()
-//{
-  //  if ((kingX == rookX) || (kingY == rookY)) return (1)
-   // return (0)
-//}
+
 
 /**
  * Простая
