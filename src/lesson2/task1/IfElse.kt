@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import java.util.*
 import kotlin.math.max
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -85,7 +86,17 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double = TODO()
-
+/**
+{
+    val S: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    val S1: Double = t1 * v1
+    val S2: Double = t2 * v2
+    val S3: Double = t3 * v3
+    if (S == S1) return (t1)
+    if (S == S2) return (t2)
+    if ((S1 + S2) > S) return (S2 - )
+}
+*/
 
 /**
  * Простая
