@@ -67,7 +67,17 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var i = 0
+    var s = n
+    for (m in 0..n) {
+        s = s / 10
+        if (s > 0)
+            i += 1
+        else return (i + 1)
+    }
+    return (i)
+}
 
 /**
  * Простая
@@ -83,7 +93,17 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var a = 2147483647
+    var minimalist = minOf(m, n)
+    var maximalist = maxOf(m, n)
+    var j = a
+    for (k in 1..j) {
+        if ((k % minimalist == 0) && (k % maximalist == 0) && (a > k))
+            a = k
+    }
+    return (a)
+}
 
 /**
  * Простая
