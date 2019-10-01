@@ -71,7 +71,7 @@ fun digitNumber(n: Int): Int {
     var i = 0
     var s = n
     var b = 0
-    for (m in 0..n) {
+    for (m in -n..n) {
         b = s / 10
         s = b
         if (s > 0)
