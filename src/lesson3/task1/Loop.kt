@@ -70,8 +70,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var i = 0
     var s = n
+    var b = 0
     for (m in 0..n) {
-        s = s / 10
+        b = s / 10
+        s = b
         if (s > 0)
             i += 1
         else return (i + 1)
@@ -102,12 +104,9 @@ return (i)
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var a = Int.MAX_VALUE
-    var minimalist = minOf(m, n)
-    var maximalist = maxOf(m, n)
-    var j = a
-    for (k in 1..j) {
-        if ((k % minimalist == 0) && (k % maximalist == 0) && (a > k))
+    var a = m * n
+    for (k in 1..(m * n)) {
+        if ((k % m == 0) && (k % n == 0) && (a > k))
             a = k
     }
     return (a)
@@ -119,7 +118,7 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var k = Int.MAX_VALUE
+    var k = n
     for (i in 1..n) {
         if ((n % i == 0) && (k > i) && (i != 1))
             k = i
@@ -133,8 +132,8 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var k = Int.MIN_VALUE
-    for (i in 0..n) {
+    var k = 0
+    for (i in 1..n) {
         if ((n % i == 0) && (i < n) && (i > k))
             k = i
     }
