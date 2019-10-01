@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -21,8 +22,8 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  */
 fun isNumberHappy(number: Int): Boolean {
     if ((number / 100 % 10 + number / 1000 % 10) == (number % 10 + number / 10 % 10))
-        return (true)
-    return (false)
+        return number == number
+    return number != number
 }
 
 /**
@@ -33,10 +34,10 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    if (((sqr(x1 - x2)) == (sqr(y1 - y2)))
+    if (((abs(x1 - x2)) == (abs(y1 - y2)))
         || (x1 == x2) || (y1 == y2)
-    ) return (true)
-    return (false)
+    ) return true
+    return false
 }
 
 
@@ -47,12 +48,12 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    if ((month == 2) && (year % 4 != 0) || ((month == 2) && (year == 1900))) return (28)
-    if ((month == 2) && (year % 4 == 0)) return (29)
-    if ((month >= 1) && (month <= 7) && (month % 2 == 1)
-        || (month >= 8) && (month <= 12) && (month % 2 == 0)
-    ) return (31)
-    return (30)
+    return when {
+        (month == 2) && (year % 4 != 0) || (month == 2) && (year == 1900) -> 28
+        (month == 2) && (year % 4 == 0) -> 29
+        (month in 1..7) && (month % 2 == 1) || (month in 8..12) && (month % 2 == 0) -> 31
+        else -> 30
+    }
 }
 
 /**
@@ -67,8 +68,8 @@ fun circleInside(
     x2: Double, y2: Double, r2: Double
 ): Boolean {
     val v: Double = sqrt(sqr(x2 - x1) + sqr(y2 - y1))
-    if ((r2 - v) >= r1) return (true)
-    return (false)
+    if ((r2 - v) >= r1) return true
+    return false
 }
 
 /**
@@ -84,6 +85,6 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val MaxSide: Int = maxOf(a, b, c)
     val MinSide: Int = minOf(a, b, c)
     val MidSide: Int = (a + b + c) - (MaxSide + MinSide)
-    if (((MidSide <= r) && (MinSide <= s)) || ((MidSide <= s) && (MinSide <= r))) return (true)
-    return (false)
+    if (((MidSide <= r) && (MinSide <= s)) || ((MidSide <= s) && (MinSide <= r))) return true
+    return false
 }
