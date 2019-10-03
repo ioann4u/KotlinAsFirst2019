@@ -74,9 +74,10 @@ fun digitNumber(n: Int): Int {
     for (m in -n..n) {
         b = s / 10
         s = b
-        if ((s > 0) || (s < 0))
+        if (s > 0)
             i += 1
-        else return (i + 1)
+        if (s < 0)
+            i -= 1
     }
     return (i)
 }
@@ -120,7 +121,7 @@ fun lcm(m: Int, n: Int): Int {
 fun minDivisor(n: Int): Int {
     var k = n
     for (i in 1..n) {
-        if ((n % i == 0) && (k > i) && (i != 1))
+        if ((n % i == 0) && (k > i) && (i > 1))
             k = i
     }
     return (k)
