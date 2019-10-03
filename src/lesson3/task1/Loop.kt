@@ -74,6 +74,10 @@ fun digitNumber(n: Int): Int {
     for (m in -n..n) {
         b = s / 10
         s = b
+        if ((s < 0) && (i == 0))
+            i -= 1
+        if ((s >= 0) && (i == 0))
+            i += 1
         if (s > 0)
             i += 1
         if (s < 0)
