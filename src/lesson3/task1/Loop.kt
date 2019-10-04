@@ -68,22 +68,14 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var i = 0
+    var count = 0
     var s = n
-    var b = 0
-    for (m in -n..n) {
-        b = s / 10
-        s = b
-        if ((s < 0) && (i == 0))
-            i -= 1
-        if ((s >= 0) && (i == 0))
-            i += 1
-        if (s > 0)
-            i += 1
-        if (s < 0)
-            i -= 1
+    if (s == 0) return (1)
+    while (s != 0) {
+        s /= 10
+        count += 1
     }
-    return (i)
+    return count
 }
 
 /**
@@ -92,15 +84,19 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
-/**{
-var i = 0
-if (n in 1..2) return (1)
-for (m in 1..n) {
-i = m + (m + 1)
+fun fib(n: Int): Int {
+    var x1 = 1
+    var x2 = 1
+    var xn: Int
+    var count = 3
+    while (count <= n) {
+        xn = x1 + x2
+        x1 = x2
+        x2 = xn
+        count += 1
+    }
+    return x2
 }
-return (i)
-}*/
 
 /**
  * Простая
@@ -108,14 +104,8 @@ return (i)
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    var a = m * n
-    for (k in 1..(m * n)) {
-        if ((k % m == 0) && (k % n == 0) && (a > k))
-            a = k
-    }
-    return (a)
-}
+fun lcm(m: Int, n: Int): Int = TODO()
+
 
 /**
  * Простая
