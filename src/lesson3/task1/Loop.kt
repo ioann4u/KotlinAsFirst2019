@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.sqrt
 
 /**
@@ -104,7 +105,18 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var max = maxOf(m, n)
+    var m2 = m
+    var n2 = n
+    var i: Int
+    while (n2 != 0) {
+        i = m2 % n2
+        m2 = n2
+        n2 = i
+    }
+    return m2
+}
 
 
 /**
@@ -142,7 +154,18 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var m2 = m
+    var n2 = n
+    var i: Int
+    while (n2 != 0) {
+        i = m2 % n2
+        m2 = n2
+        n2 = i
+    }
+    return if (m2 == 1) (m2 != n2)
+    else (m2 == n2)
+}
 
 /**
  * Простая
@@ -151,7 +174,17 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    var c = 0
+    var k = 1
+    while (m <= n) {
+        if ((sqr(k) >= m) && (sqr(k) <= n))
+            k += 1
+        c == k
+    }
+    return if (c != 0) (c == k)
+    else (c != k)
+}
 
 /**
  * Средняя
@@ -169,7 +202,19 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var count = 0
+    var n = x
+    if (x == 1) return (0)
+    while (n != 1) {
+        when {
+            n % 2 == 0 -> n /= 2
+            n % 2 != 0 -> n = 3 * n + 1
+        }
+        count += 1
+    }
+    return count
+}
 
 /**
  * Средняя
