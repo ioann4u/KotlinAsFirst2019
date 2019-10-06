@@ -106,16 +106,15 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var max = maxOf(m, n)
-    var m2 = m
-    var n2 = n
-    var i: Int
-    while (n2 != 0) {
-        i = m2 % n2
-        m2 = n2
-        n2 = i
+    var p = m * n
+    var k = 0
+    for (i in 1..p) {
+        if ((i % m == 0) && (i % n == 0)) {
+            k = i
+            break
+        }
     }
-    return m2
+    return k
 }
 
 
@@ -125,12 +124,14 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var k = n
+    var k = 0
     for (i in 1..n) {
-        if ((n % i == 0) && (k > i) && (i > 1))
+        if ((n % i == 0) && (i > 1)) {
             k = i
+            break
+        }
     }
-    return (k)
+    return k
 }
 
 /**
@@ -139,13 +140,14 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var k = 0
+    var k = 1
     for (i in 1..n) {
-        if ((n % i == 0) && (i < n) && (i > k))
+        if ((n % i == 0) && (i > k) && (i < n))
             k = i
     }
-    return (k)
+    return k
 }
+
 
 /**
  * Простая
@@ -235,7 +237,15 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var c = 0
+    var count = n
+    while (count > 0) {
+        c = count % 10 + c * 10
+        count /= 10
+    }
+    return c
+}
 
 /**
  * Средняя
@@ -246,7 +256,16 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    var count = n
+    var c = 0
+    while (count > 0) {
+        c = count % 10 + c * 10
+        count /= 10
+    }
+    return if (c == n) (true)
+    else (false)
+}
 
 /**
  * Средняя
