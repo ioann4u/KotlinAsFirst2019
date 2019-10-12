@@ -30,13 +30,9 @@ fun isNumberHappy(number: Int): Boolean =
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    if (((abs(x1 - x2)) == (abs(y1 - y2)))
-        || (x1 == x2) || (y1 == y2)
-    ) return true
-    return false
-}
-
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    (((abs(x1 - x2)) == (abs(y1 - y2)))
+            || (x1 == x2) || (y1 == y2))
 
 /**
  * Простая
@@ -75,10 +71,6 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val maxSide: Int = maxOf(a, b, c)
-    val minSide: Int = minOf(a, b, c)
-    val midSide: Int = (a + b + c) - (maxSide + minSide)
-    if (((midSide <= r) && (minSide <= s)) || ((midSide <= s) && (minSide <= r))) return true
-    return false
-}
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
+    ((((a + b + c) - (maxOf(a, b, c) + minOf(a, b, c)) <= r) && (minOf(a, b, c) <= s))
+            || (((a + b + c) - (maxOf(a, b, c) + minOf(a, b, c)) <= s) && (minOf(a, b, c) <= r)))
