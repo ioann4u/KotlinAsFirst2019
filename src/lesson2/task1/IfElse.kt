@@ -67,14 +67,13 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    return when {
+fun ageDescription(age: Int): String =
+    when {
         age in (10..20) || age in (110..120)
                 || age % 10 in (5..9) || age % 10 == 0 -> "$age лет"
         age % 10 == 1 -> "$age год"
         else -> "$age года"
     }
-}
 
 /**
  * Простая
@@ -99,7 +98,6 @@ fun timeForHalfWay(
     }
 }
 
-
 /**
  * Простая
  *
@@ -113,15 +111,14 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int {
-    return when {
+): Int =
+    when {
         (((kingX == rookX1) || (kingY == rookY1))
                 && ((kingX == rookX2) || (kingY == rookY2))) -> 3
         (kingX == rookX1) || (kingY == rookY1) -> 1
         (kingX == rookX2) || (kingY == rookY2) -> 2
         else -> 0
     }
-}
 
 /**
  * Простая
@@ -137,15 +134,13 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int {
-    return when {
+): Int =
+    when {
         (abs(kingX - bishopX) == abs(kingY - bishopY)) && ((kingX == rookX) || (kingY == rookY)) -> 3
         (kingX == rookX) || (kingY == rookY) -> 1
         abs(kingX - bishopX) == abs(kingY - bishopY) -> 2
         else -> 0
     }
-}
-
 
 /**
  * Простая
@@ -155,17 +150,14 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val maxSide: Double = maxOf(a, b, c)
-    val minSide: Double = minOf(a, b, c)
-    val midSide: Double = (a + b + c) - (maxSide + minSide)
-    return when {
-        maxSide > minSide + midSide -> -1
-        sqr(maxSide) < sqr(minSide) + sqr(midSide) -> 0
-        sqr(maxSide) == sqr(minSide) + sqr(midSide) -> 1
+fun triangleKind(a: Double, b: Double, c: Double): Int =
+    when {
+        maxOf(a, b, c) > minOf(a, b, c) + (a + b + c) - (maxOf(a, b, c) + minOf(a, b, c)) -> -1
+        sqr(maxOf(a, b, c)) < sqr(minOf(a, b, c)) + sqr((a + b + c) - (maxOf(a, b, c) + minOf(a, b, c))) -> 0
+        sqr(maxOf(a, b, c)) == sqr(minOf(a, b, c)) + sqr((a + b + c) - (maxOf(a, b, c) + minOf(a, b, c))) -> 1
         else -> 2
     }
-}
+
 
 /**
  * Средняя
@@ -175,14 +167,14 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
 
-    return when {
+    when {
         (a > d) || (c > b) -> -1
         (c >= a) && (b >= d) -> d - c
         (a >= c) && (d >= b) -> b - a
         (d >= a) && (b > d) -> d - a
         else -> b - c
     }
-}
+
 
