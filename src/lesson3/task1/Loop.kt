@@ -2,7 +2,6 @@
 
 package lesson3.task1
 
-import lesson1.task1.sqr
 import kotlin.math.sqrt
 
 /**
@@ -106,15 +105,15 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var p = m * n
+    var maximum = maxOf(m, n)
+    var minimum = minOf(m, n)
     var k = 0
-    for (i in 1..p) {
-        if ((i % m == 0) && (i % n == 0)) {
-            k = i
-            break
-        }
+    while (minimum != 0) {
+        k = maximum % minimum
+        maximum = minimum
+        minimum = k
     }
-    return k
+    return m * n / maximum
 }
 
 
@@ -124,14 +123,12 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var k = 0
-    for (i in 1..n) {
-        if ((n % i == 0) && (i > 1)) {
-            k = i
-            break
-        }
+    var i = 2
+    if (isPrime(n)) return n
+    else {
+        while (n % i != 0) i += 1
     }
-    return k
+    return i
 }
 
 /**
@@ -140,12 +137,12 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var k = 1
-    for (i in 1..n) {
-        if ((n % i == 0) && (i > k) && (i < n))
-            k = i
+    var i = n - 1
+    if (isPrime(n)) return 1
+    else {
+        while (n % i != 0) i -= 1
     }
-    return k
+    return i
 }
 
 
@@ -159,14 +156,14 @@ fun maxDivisor(n: Int): Int {
 fun isCoPrime(m: Int, n: Int): Boolean {
     var m2 = m
     var n2 = n
-    var i: Int
+    var i = 0
     while (n2 != 0) {
         i = m2 % n2
         m2 = n2
         n2 = i
     }
-    return if (m2 == 1) (m2 != n2)
-    else (m2 == n2)
+    return if (m2 == 1) m2 != n2
+    else m2 == n2
 }
 
 /**
@@ -197,7 +194,6 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 fun collatzSteps(x: Int): Int {
     var count = 0
     var n = x
-    if (x == 1) return (0)
     while (n != 1) {
         when {
             n % 2 == 0 -> n /= 2
@@ -256,16 +252,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    var count = n
-    var c = 0
-    while (count > 0) {
-        c = count % 10 + c * 10
-        count /= 10
-    }
-    return if (c == n) (true)
-    else (false)
-}
+fun isPalindrome(n: Int): Boolean = revert(n) == n
 
 /**
  * Средняя
@@ -298,27 +285,3 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
-/**{
-    var x1 = 1
-    var x2 = 1
-    var xn = 0
-    var count = 3
-    var counting = 0
-    if (n == 1 || n == 2) return 1
-    while (count <= n) {
-        xn = x1 + x2
-        x1 = x2
-        x2 = xn
-        while (xn != 0) {
-            xn /= 10
-            counting += 1
-        }
-        xn = x2
-        count += counting
-        counting = 0
-    }
-    count -= 1
-    if (count - n == 0) return (true)
-    else return (false)
-}
- */

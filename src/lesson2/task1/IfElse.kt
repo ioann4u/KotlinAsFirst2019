@@ -4,10 +4,8 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
-import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
-import kotlin.math.sin
 import kotlin.math.sqrt
 
 /**
