@@ -176,7 +176,7 @@ fun times(a: List<Int>, b: List<Int>): Int {
  */
 fun polynom(p: List<Int>, x: Int): Int {
     var poly = 0
-    for (counter in 0 until p.size) {
+    for (counter in p.indices) {
         poly += (p[counter] * x.toDouble().pow(counter.toDouble())).toInt()
     }
     return poly
@@ -206,7 +206,19 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    var result = mutableListOf<Int>()
+    var divider = 2
+    var num = n
+    while (num > 1) {
+        if (num % divider == 0) {
+            num /= divider
+            result.add(divider)
+        } else
+            divider += 1
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -215,7 +227,8 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String =
+    factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя
@@ -224,7 +237,9 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    TODO()
+}
 
 /**
  * Сложная
@@ -246,7 +261,9 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    TODO()
+}
 
 /**
  * Сложная
@@ -270,7 +287,20 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var count = 0
+    var num = n
+    var result = ""
+    val arabicNumbers = listOf<Int>(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000).reversed()
+    val romanNumber = listOf<String>("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M").reversed()
+    while (num > 0) {
+        if (num >= arabicNumbers[count]) {
+            result += romanNumber[count]
+            num -= arabicNumbers[count]
+        } else count += 1
+    }
+    return result
+}
 
 /**
  * Очень сложная
