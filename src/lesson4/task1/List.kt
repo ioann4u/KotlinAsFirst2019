@@ -119,8 +119,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var abs = 0.0
-    if (v.isEmpty()) 0.0
-    else for (element in v) {
+    for (element in v) {
         abs = sqrt(sqr(element) + sqr(abs))
     }
     return abs
@@ -144,7 +143,7 @@ fun mean(list: List<Double>): Double =
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val middleCount = list.sum() / list.size
+    val middleCount = mean(list)
     for ((index, element) in list.withIndex()) {
         list[index] = element - middleCount
     }
@@ -207,7 +206,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var result = mutableListOf<Int>()
+    val result = mutableListOf<Int>()
     var divider = 2
     var num = n
     while (num > 1) {
@@ -237,9 +236,7 @@ fun factorizeToString(n: Int): String =
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> {
-    TODO()
-}
+fun convert(n: Int, base: Int): List<Int> = TODO()
 
 /**
  * Сложная
@@ -261,9 +258,7 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int {
-    TODO()
-}
+fun decimal(digits: List<Int>, base: Int): Int = TODO()
 
 /**
  * Сложная
@@ -291,8 +286,8 @@ fun roman(n: Int): String {
     var count = 0
     var num = n
     var result = ""
-    val arabicNumbers = listOf<Int>(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000).reversed()
-    val romanNumber = listOf<String>("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M").reversed()
+    val arabicNumbers = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000).reversed()
+    val romanNumber = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M").reversed()
     while (num > 0) {
         if (num >= arabicNumbers[count]) {
             result += romanNumber[count]
