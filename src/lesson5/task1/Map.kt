@@ -94,8 +94,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val result = mutableMapOf<Int, MutableList<String>>()
     for ((students, marks) in grades) {
-        if (marks in result) result[marks]?.add(students)
-        else result[marks] = mutableListOf(students)
+        result[marks] = result.getOrDefault(marks, mutableListOf()).plus(students) as MutableList<String>
     }
     return result
 }
@@ -165,13 +164,12 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
-    var res = mapA.toMutableMap()
+    val res = mapA.toMutableMap()
     for ((name, phone) in mapB) {
         if (name !in res)
             res[name] = phone
-        else
-            if (res[name].toString() != phone)
-                res[name] += ", $phone"
+        else if (res[name].toString() != phone)
+            res[name] += ", $phone"
     }
     return res
 }
