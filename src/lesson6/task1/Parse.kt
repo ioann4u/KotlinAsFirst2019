@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import kotlin.math.max
+
 /**
  * Пример
  *
@@ -69,7 +71,34 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val dates = str.split(" ")
+    if (dates.size != 3) return ""
+    try {
+        val day = dates[0].toInt()
+        val year = dates[2].toInt()
+        if (day !in 1..31) return ""
+        val month = when (dates[1]) {
+            "января" -> 1
+            "февраля" -> 2
+            "марта" -> 3
+            "апреля" -> 4
+            "мая" -> 5
+            "июня" -> 6
+            "июля" -> 7
+            "августа" -> 8
+            "сентября" -> 9
+            "октября" -> 10
+            "ноября" -> 11
+            "декабря" -> 12
+            else -> return ""
+        }
+        if (day > lesson2.task2.daysInMonth(month, year) || year < 0) return ""
+        return String.format("%02d.%02d.%d", day, month, year)
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -81,7 +110,37 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val dates = digital.split(".")
+    if (dates.size != 3) return ""
+    try {
+        val days = dates[0].toInt()
+        val months = dates[1].toInt()
+        val years = dates[2].toInt()
+        val day = dates[0]
+        if (days !in 1..31) return ""
+        if (days > lesson2.task2.daysInMonth(months, years) || years < 0) return ""
+        val month = when (months) {
+            1 -> "января"
+            2 -> "февраля"
+            3 -> "марта"
+            4 -> "апреля"
+            5 -> "мая"
+            6 -> "июня"
+            7 -> "июля"
+            8 -> "августа"
+            9 -> "сентября"
+            10 -> "октября"
+            11 -> "ноября"
+            12 -> "декабря"
+            else -> return ""
+        }
+        val year = dates[2]
+        return String.format("%d %s %d", days, month, years)
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -109,7 +168,16 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val attempts = jumps.split(" ")
+    var maxJump = -1
+    if (Regex("""[^\s\d-%]""").find(jumps) != null)
+        return maxJump
+    for (jump in attempts)
+        if (jump.matches(Regex("""\d+[^-%]""")))
+            maxJump = maxOf(maxJump, jump.toInt())
+    return maxJump
+}
 
 /**
  * Сложная
@@ -122,7 +190,17 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val attempts = jumps.split(" ")
+    var maxJump = -1
+    if (Regex("""[^\s\d-+%]""").find(jumps) != null)
+        return maxJump
+    for (jump in attempts)
+        if (jump.matches(Regex("""\d+[^-+%]""")))
+            if (jump.matches(Regex("""\d\s+""")))
+                maxJump = maxOf(maxJump, jump.toInt())
+    return maxJump
+}
 
 /**
  * Сложная
