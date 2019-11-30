@@ -195,10 +195,12 @@ fun bestHighJump(jumps: String): Int {
     var maxJump = -1
     if (Regex("""[^\s\d-+%]""").find(jumps) != null)
         return maxJump
-    for (jump in attempts)
+    for (jump in attempts) {
         if (jump.matches(Regex("""\d+[^-+%]""")))
-            if (jump.matches(Regex("""\d\s+""")))
+            if (jump.contains(Regex("""(\d+)\s\+""")))
                 maxJump = maxOf(maxJump, jump.toInt())
+
+    }
     return maxJump
 }
 
@@ -235,7 +237,21 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var maxValue = -1
+    var name = ""
+    //if (Regex("""[^\d\s\w;.]""") != null)
+    //return name
+    for (products in description.split(";")) {
+        for (product in products.split(" ")) {
+            if (products.matches(Regex("""\d""")))
+                maxValue = maxOf(maxValue, products.toInt())
+            //if (product.matches(Regex("""\d""")))
+            //maxValue = product
+        }
+    }
+    return maxValue.toString()
+}
 
 /**
  * Сложная
@@ -249,7 +265,6 @@ fun mostExpensive(description: String): String = TODO()
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int = TODO()
-
 /**
  * Очень сложная
  *
