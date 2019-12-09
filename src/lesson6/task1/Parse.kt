@@ -2,7 +2,6 @@
 
 package lesson6.task1
 
-import kotlin.math.max
 
 /**
  * Пример
@@ -74,25 +73,26 @@ fun main() {
 fun dateStrToDigit(str: String): String {
     val dates = str.split(" ")
     if (dates.size != 3) return ""
+
+    val day = dates[0].toInt()
+    val year = dates[2].toInt()
+    if (day !in 1..31) return ""
+    val month = when (dates[1]) {
+        "января" -> 1
+        "февраля" -> 2
+        "марта" -> 3
+        "апреля" -> 4
+        "мая" -> 5
+        "июня" -> 6
+        "июля" -> 7
+        "августа" -> 8
+        "сентября" -> 9
+        "октября" -> 10
+        "ноября" -> 11
+        "декабря" -> 12
+        else -> return ""
+    }
     try {
-        val day = dates[0].toInt()
-        val year = dates[2].toInt()
-        if (day !in 1..31) return ""
-        val month = when (dates[1]) {
-            "января" -> 1
-            "февраля" -> 2
-            "марта" -> 3
-            "апреля" -> 4
-            "мая" -> 5
-            "июня" -> 6
-            "июля" -> 7
-            "августа" -> 8
-            "сентября" -> 9
-            "октября" -> 10
-            "ноября" -> 11
-            "декабря" -> 12
-            else -> return ""
-        }
         if (day > lesson2.task2.daysInMonth(month, year) || year < 0) return ""
         return String.format("%02d.%02d.%d", day, month, year)
     } catch (e: NumberFormatException) {
@@ -197,7 +197,7 @@ fun bestHighJump(jumps: String): Int {
         return maxJump
     for (jump in attempts) {
         if (jump.matches(Regex("""\d+[^-+%]""")))
-            if (jump.contains(Regex("""(\d+)\s\+""")))
+            if (jump.matches(Regex("""[\d\s+]""")))
                 maxJump = maxOf(maxJump, jump.toInt())
 
     }
@@ -265,6 +265,7 @@ fun mostExpensive(description: String): String {
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int = TODO()
+
 /**
  * Очень сложная
  *
