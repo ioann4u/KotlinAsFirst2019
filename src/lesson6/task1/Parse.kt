@@ -113,32 +113,33 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val dates = digital.split(".")
     if (dates.size != 3) return ""
-    try {
-        val days = dates[0].toInt()
-        val months = dates[1].toInt()
-        val years = dates[2].toInt()
-        val day = dates[0]
-        if (days !in 1..31) return ""
-        if (days > lesson2.task2.daysInMonth(months, years) || years < 0) return ""
-        val month = when (months) {
-            1 -> "января"
-            2 -> "февраля"
-            3 -> "марта"
-            4 -> "апреля"
-            5 -> "мая"
-            6 -> "июня"
-            7 -> "июля"
-            8 -> "августа"
-            9 -> "сентября"
-            10 -> "октября"
-            11 -> "ноября"
-            12 -> "декабря"
-            else -> return ""
-        }
-        val year = dates[2]
-        return String.format("%d %s %d", days, month, years)
+
+    val days = dates[0].toInt()
+    val months = dates[1].toInt()
+    val years = dates[2].toInt()
+    val day = dates[0]
+    if (days !in 1..31) return ""
+    if (days > lesson2.task2.daysInMonth(months, years) || years < 0) return ""
+    val month = when (months) {
+        1 -> "января"
+        2 -> "февраля"
+        3 -> "марта"
+        4 -> "апреля"
+        5 -> "мая"
+        6 -> "июня"
+        7 -> "июля"
+        8 -> "августа"
+        9 -> "сентября"
+        10 -> "октября"
+        11 -> "ноября"
+        12 -> "декабря"
+        else -> return ""
+    }
+    val year = dates[2]
+    return try {
+        String.format("%d %s %d", days, month, years)
     } catch (e: NumberFormatException) {
-        return ""
+        ""
     }
 }
 
@@ -191,17 +192,18 @@ fun bestLongJump(jumps: String): Int {
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val attempts = jumps.split(" ")
     var maxJump = -1
+    var jp: String = "-1"
     if (Regex("""[^\s\d-+%]""").find(jumps) != null)
         return maxJump
-    for (jump in attempts) {
-        if (jump.matches(Regex("""\d+[^-+%]""")))
-            if (jump.matches(Regex("""[\d\s+]""")))
-                maxJump = maxOf(maxJump, jump.toInt())
+    for (jump in jumps.split(" ")) {
+        if ((jumps.matches(Regex("""(\d\d\d\s\+)+"""))))
+            jp = jumps
+        //if (jp.matches(Regex("""\d""")))
+        //  maxJump = maxOf(maxJump, jumps.toInt())
 
     }
-    return maxJump
+    return jp.toInt()
 }
 
 /**
