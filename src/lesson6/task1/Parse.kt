@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 
 /**
  * Пример
@@ -73,27 +75,27 @@ fun main() {
 fun dateStrToDigit(str: String): String {
     val dates = str.split(" ")
     if (dates.size != 3) return ""
-
-    val day = dates[0].toInt()
-    val year = dates[2].toInt()
-    if (day !in 1..31) return ""
-    val month = when (dates[1]) {
-        "января" -> 1
-        "февраля" -> 2
-        "марта" -> 3
-        "апреля" -> 4
-        "мая" -> 5
-        "июня" -> 6
-        "июля" -> 7
-        "августа" -> 8
-        "сентября" -> 9
-        "октября" -> 10
-        "ноября" -> 11
-        "декабря" -> 12
-        else -> return ""
-    }
     try {
-        if (day > lesson2.task2.daysInMonth(month, year) || year < 0) return ""
+        val day = dates[0].toInt()
+        val year = dates[2].toInt()
+        if (day !in 1..31) return ""
+        val month = when (dates[1]) {
+            "января" -> 1
+            "февраля" -> 2
+            "марта" -> 3
+            "апреля" -> 4
+            "мая" -> 5
+            "июня" -> 6
+            "июля" -> 7
+            "августа" -> 8
+            "сентября" -> 9
+            "октября" -> 10
+            "ноября" -> 11
+            "декабря" -> 12
+            else -> return ""
+        }
+
+        if (day > daysInMonth(month, year) || year < 0) return ""
         return String.format("%02d.%02d.%d", day, month, year)
     } catch (e: NumberFormatException) {
         return ""
@@ -112,34 +114,33 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val dates = digital.split(".")
-    if (dates.size != 3) return ""
-
-    val days = dates[0].toInt()
-    val months = dates[1].toInt()
-    val years = dates[2].toInt()
-    val day = dates[0]
-    if (days !in 1..31) return ""
-    if (days > lesson2.task2.daysInMonth(months, years) || years < 0) return ""
-    val month = when (months) {
-        1 -> "января"
-        2 -> "февраля"
-        3 -> "марта"
-        4 -> "апреля"
-        5 -> "мая"
-        6 -> "июня"
-        7 -> "июля"
-        8 -> "августа"
-        9 -> "сентября"
-        10 -> "октября"
-        11 -> "ноября"
-        12 -> "декабря"
-        else -> return ""
-    }
-    val year = dates[2]
-    return try {
-        String.format("%d %s %d", days, month, years)
+    if (dates.size != 3) return " "
+    try {
+        val days = dates[0].toInt()
+        val months = dates[1].toInt()
+        val years = dates[2].toInt()
+        val day = dates[0]
+        if (days !in 1..31) return ""
+        if (days > daysInMonth(months, years) || years < 0) return ""
+        val month = when (months) {
+            1 -> "января"
+            2 -> "февраля"
+            3 -> "марта"
+            4 -> "апреля"
+            5 -> "мая"
+            6 -> "июня"
+            7 -> "июля"
+            8 -> "августа"
+            9 -> "сентября"
+            10 -> "октября"
+            11 -> "ноября"
+            12 -> "декабря"
+            else -> return ""
+        }
+        val year = dates[2]
+        return String.format("%d %s %d", days, month, years)
     } catch (e: NumberFormatException) {
-        ""
+        return ""
     }
 }
 
@@ -175,7 +176,7 @@ fun bestLongJump(jumps: String): Int {
     if (Regex("""[^\s\d-%]""").find(jumps) != null)
         return maxJump
     for (jump in attempts)
-        if (jump.matches(Regex("""\d+[^-%]""")))
+        if (jump.matches(Regex("""\d+""")))
             maxJump = maxOf(maxJump, jump.toInt())
     return maxJump
 }
@@ -193,18 +194,18 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     var maxJump = -1
-    var jp: String = "-1"
-    if (Regex("""[^\s\d-+%]""").find(jumps) != null)
+    val jump = jumps.split(" ")
+    if (Regex("""[^\d\s-+%]""").find(jumps) != null)
         return maxJump
-    for (jump in jumps.split(" ")) {
-        if ((jumps.matches(Regex("""(\d\d\d\s\+)+"""))))
-            jp = jumps
-        //if (jp.matches(Regex("""\d""")))
-        //  maxJump = maxOf(maxJump, jumps.toInt())
-
+    for (attempts in jump.indices) {
+        if (Regex("""\d+""").matches(jumps.split(" ")[attempts]) &&
+            Regex("""\+""").matches(jumps.split(" ")[attempts + 1])
+        )
+            maxJump = maxOf(maxJump, jumps.split(" ")[attempts].toInt())
     }
-    return jp.toInt()
+    return maxJump
 }
+
 
 /**
  * Сложная
@@ -240,19 +241,7 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    var maxValue = -1
-    var name = ""
-    //if (Regex("""[^\d\s\w;.]""") != null)
-    //return name
-    for (products in description.split(";")) {
-        for (product in products.split(" ")) {
-            if (products.matches(Regex("""\d""")))
-                maxValue = maxOf(maxValue, products.toInt())
-            //if (product.matches(Regex("""\d""")))
-            //maxValue = product
-        }
-    }
-    return maxValue.toString()
+    TODO()
 }
 
 /**
