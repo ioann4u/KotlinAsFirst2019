@@ -108,7 +108,7 @@ fun fib(n: Int): Int {
 fun lcm(m: Int, n: Int): Int {
     var maximum = maxOf(m, n)
     var minimum = minOf(m, n)
-    var k = 0
+    var k: Int
     while (minimum != 0) {
         k = maximum % minimum
         maximum = minimum
@@ -157,7 +157,7 @@ fun maxDivisor(n: Int): Int {
 fun isCoPrime(m: Int, n: Int): Boolean {
     var m2 = m
     var n2 = n
-    var i = 0
+    var i: Int
     while (n2 != 0) {
         i = m2 % n2
         m2 = n2
@@ -274,20 +274,7 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int {
-    var num = 0
-    var sqrnum = 0
-    var i = 0
-    var i1 = 0
-    if (n == 1 || n == 2 || n == 3)
-        return sqr(n)
-    while (i < n) {
-        sqrnum += sqr(i) * 10 + sqr(i1)
-        i++
-        i1 = i + 1
-    }
-    return sqrnum
-}
+fun squareSequenceDigit(n: Int): Int = TODO()
 
 /**
  * Сложная

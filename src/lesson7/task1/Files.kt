@@ -56,7 +56,7 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): MutableMap<String, Int> {
-
+    TODO()
 }
 
 
@@ -217,7 +217,7 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     var maxLength = -1
     val rest = mutableListOf<String>()
-    val outputStream = File(outputName).bufferedWriter()
+    File(outputName).bufferedWriter()
     for (line in File(inputName).readLines()) {
         val lines = line.toLowerCase()
         val str = lines.toSet()
