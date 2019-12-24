@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.NumberFormatException
 
 
 /**
@@ -75,32 +76,28 @@ fun main() {
 fun dateStrToDigit(str: String): String {
     val dates = str.split(" ")
     if (dates.size != 3) return ""
-    try {
-        val day = dates[0].toInt()
-        val year = dates[2].toInt()
-        if (day !in 1..31) return ""
-        val month = when (dates[1]) {
-            "января" -> 1
-            "февраля" -> 2
-            "марта" -> 3
-            "апреля" -> 4
-            "мая" -> 5
-            "июня" -> 6
-            "июля" -> 7
-            "августа" -> 8
-            "сентября" -> 9
-            "октября" -> 10
-            "ноября" -> 11
-            "декабря" -> 12
-            else -> return ""
-        }
-
-        if (day > daysInMonth(month, year) || year < 0) return ""
-        return String.format("%02d.%02d.%d", day, month, year)
-    } catch (e: NumberFormatException) {
-        return ""
+    val day = dates[0]!!.toInt()
+    val year = dates[2]!!.toInt()
+    if (day !in 1..31) return ""
+    val month = when (dates[1]) {
+        "января" -> 1
+        "февраля" -> 2
+        "марта" -> 3
+        "апреля" -> 4
+        "мая" -> 5
+        "июня" -> 6
+        "июля" -> 7
+        "августа" -> 8
+        "сентября" -> 9
+        "октября" -> 10
+        "ноября" -> 11
+        "декабря" -> 12
+        else -> return ""
     }
+    if (day > daysInMonth(month, year) || year < 0) return ""
+    return String.format("%02d.%02d.%d", day, month, year)
 }
+
 
 /**
  * Средняя
@@ -114,14 +111,13 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val dates = digital.split(".")
-    if (dates.size != 3) return " "
+    if (dates.size != 3) return ""
     try {
-        val days = dates[0].toInt()
-        val months = dates[1].toInt()
-        val years = dates[2].toInt()
-        val day = dates[0]
-        if (days !in 1..31) return ""
-        if (days > daysInMonth(months, years) || years < 0) return ""
+        val day = dates[0]!!.toInt()
+        val months = dates[1]!!.toInt()
+        val year = dates[2]!!.toInt()
+        if (day !in 1..31) return ""
+        if (day > daysInMonth(months, year) || year < 0) return ""
         val month = when (months) {
             1 -> "января"
             2 -> "февраля"
@@ -137,8 +133,7 @@ fun dateDigitToStr(digital: String): String {
             12 -> "декабря"
             else -> return ""
         }
-        val year = dates[2]
-        return String.format("%d %s %d", days, month, years)
+        return String.format("%d %s %d", day, month, year)
     } catch (e: NumberFormatException) {
         return ""
     }
@@ -194,14 +189,17 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     var maxJump = -1
+    val plus = "+"
     val jump = jumps.split(" ")
     if (Regex("""[^\d\s-+%]""").find(jumps) != null)
         return maxJump
-    for (attempts in jump.indices) {
-        if (Regex("""\d+""").matches(jumps.split(" ")[attempts]) &&
-            Regex("""\+""").matches(jumps.split(" ")[attempts + 1])
-        )
-            maxJump = maxOf(maxJump, jumps.split(" ")[attempts].toInt())
+    try {
+        for (attempts in 0 until jump.size step 2) {
+            val bestJump = jump[attempts].toInt()
+            if ((bestJump > maxJump) && (jump[attempts + 1] == plus))
+                maxJump = bestJump
+        }
+    } catch (e: NumberFormatException) {
     }
     return maxJump
 }
@@ -227,7 +225,23 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var pos = 0
+    val words = str.toLowerCase().split(" ")
+    if (words.size < 2)
+        return -1
+    try {
+        for (i in words.indices) {
+            when {
+                words[i] == words[i + 1] -> return pos
+                words[i] != words[i + 1] -> pos += words[i].length + 1
+            }
+        }
+    } catch (e: IndexOutOfBoundsException) {
+
+    }
+    return -1
+}
 
 /**
  * Сложная
@@ -241,7 +255,24 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    TODO()
+    var result = ""
+    var maxValue = -1.0
+    val products = description.split("; ")
+    if (products.isEmpty())
+        return ""
+    try {
+        for (i in products.indices) {
+            val product = products[i].split(" ")
+            val name = product[0]
+            val value = product[1].toDouble()
+            if (value > maxValue) {
+                result = name
+                maxValue = value
+            }
+        }
+    } catch (e: IndexOutOfBoundsException) {
+    }
+    return result
 }
 
 /**
