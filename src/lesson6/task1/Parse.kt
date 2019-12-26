@@ -5,6 +5,20 @@ package lesson6.task1
 import lesson2.task2.daysInMonth
 import java.lang.NumberFormatException
 
+val months = listOf(
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря"
+)
 
 /**
  * Пример
@@ -75,27 +89,22 @@ fun main() {
  */
 fun dateStrToDigit(str: String): String {
     val dates = str.split(" ")
+    var m = 0
     if (dates.size != 3) return ""
+    if (dates[0].toInt() == null || dates[2].toInt() == null)
+        return ""
     val day = dates[0].toInt()
     val year = dates[2].toInt()
     if (day !in 1..31) return ""
-    val month = when (dates[1]) {
-        "января" -> 1
-        "февраля" -> 2
-        "марта" -> 3
-        "апреля" -> 4
-        "мая" -> 5
-        "июня" -> 6
-        "июля" -> 7
-        "августа" -> 8
-        "сентября" -> 9
-        "октября" -> 10
-        "ноября" -> 11
-        "декабря" -> 12
-        else -> return ""
+    if (dates[1] in months)
+        m = months.indexOf(dates[1]) + 1
+    if (day > daysInMonth(m, year) || year < 0 || m == 0) return ""
+    return try {
+        String.format("%02d.%02d.%d", day, m, year)
+    } catch (e: NumberFormatException) {
+        ""
     }
-    if (day > daysInMonth(month, year) || year < 0) return ""
-    return String.format("%02d.%02d.%d", day, month, year)
+
 }
 
 
@@ -170,9 +179,12 @@ fun bestLongJump(jumps: String): Int {
     var maxJump = -1
     if (Regex("""[^\s\d-%]""").find(jumps) != null)
         return maxJump
-    for (jump in attempts)
+    for (jump in attempts) {
         if (jump.matches(Regex("""\d+""")))
             maxJump = maxOf(maxJump, jump.toInt())
+        //else if (jump.matches(Regex("""\d+[-%]""")))
+        //  return -1
+    }
     return maxJump
 }
 
