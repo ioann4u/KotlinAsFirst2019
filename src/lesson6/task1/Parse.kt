@@ -91,14 +91,14 @@ fun dateStrToDigit(str: String): String {
     val dates = str.split(" ")
     var m = 0
     if (dates.size != 3) return ""
-    if (dates[0].toInt() == null || dates[2].toInt() == null)
-        return ""
-    val day = dates[0].toInt()
-    val year = dates[2].toInt()
+    val day = dates[0].toIntOrNull()
+    val year = dates[2].toIntOrNull()!!
     if (day !in 1..31) return ""
     if (dates[1] in months)
         m = months.indexOf(dates[1]) + 1
-    if (day > daysInMonth(m, year) || year < 0 || m == 0) return ""
+    if (day != null) {
+        if (day > daysInMonth(m, year) || year < 0 || m == 0) return ""
+    }
     return try {
         String.format("%02d.%02d.%d", day, m, year)
     } catch (e: NumberFormatException) {
@@ -121,32 +121,22 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val dates = digital.split(".")
     if (dates.size != 3) return ""
+    val day = dates[0].toIntOrNull()
+    val month = dates[1].toIntOrNull()!!
+    val year = dates[2].toIntOrNull()!!
+    val mon: String
     try {
-        val day = dates[0].toInt()
-        val months = dates[1].toInt()
-        val year = dates[2].toInt()
         if (day !in 1..31) return ""
-        if (day > daysInMonth(months, year) || year < 0) return ""
-        val month = when (months) {
-            1 -> "января"
-            2 -> "февраля"
-            3 -> "марта"
-            4 -> "апреля"
-            5 -> "мая"
-            6 -> "июня"
-            7 -> "июля"
-            8 -> "августа"
-            9 -> "сентября"
-            10 -> "октября"
-            11 -> "ноября"
-            12 -> "декабря"
-            else -> return ""
+        if (day != null) {
+            if (day > daysInMonth(month, year) || year < 0) return ""
         }
-        return String.format("%d %s %d", day, month, year)
+        mon = (months[month - 1])
     } catch (e: NumberFormatException) {
         return ""
     }
+    return String.format("%d %s %d", day, mon, year)
 }
+
 
 /**
  * Средняя
@@ -180,10 +170,8 @@ fun bestLongJump(jumps: String): Int {
     if (Regex("""[^\s\d-%]""").find(jumps) != null)
         return maxJump
     for (jump in attempts) {
-        if (jump.matches(Regex("""\d+""")))
+        if (jump.matches(Regex("""\d+[^\s-%]""")))
             maxJump = maxOf(maxJump, jump.toInt())
-        //else if (jump.matches(Regex("""\d+[-%]""")))
-        //  return -1
     }
     return maxJump
 }
@@ -208,7 +196,7 @@ fun bestHighJump(jumps: String): Int {
     try {
         for (attempts in 0 until jump.size step 2) {
             val bestJump = jump[attempts].toInt()
-            if ((bestJump > maxJump) && (jump[attempts + 1] == plus))
+            if ((bestJump >= maxJump) && (jump[attempts + 1] == plus))
                 maxJump = bestJump
         }
     } catch (e: NumberFormatException) {
