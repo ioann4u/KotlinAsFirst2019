@@ -167,7 +167,7 @@ fun flattenPhoneNumber(phone: String): String = TODO()
 fun bestLongJump(jumps: String): Int {
     val attempts = jumps.split(" ")
     var maxJump = -1
-    if (Regex("""[^\s\d-%]""").find(jumps) != null)
+    if ((Regex("""[^\s\d-%]""").find(jumps) != null) && (Regex("""[^a-zA-Z]""").find(jumps) != null))
         return maxJump
     for (jump in attempts) {
         if (jump.matches(Regex("""\d+[^\s-%]""")))
@@ -191,7 +191,7 @@ fun bestHighJump(jumps: String): Int {
     var maxJump = -1
     val plus = "+"
     val jump = jumps.split(" ")
-    if (Regex("""[^\d\s-+%]""").find(jumps) != null)
+    if ((Regex("""[^\d\s-+%]""").find(jumps) != null) && (Regex("""[^a-zA-Z]""").find(jumps) != null))
         return maxJump
     try {
         for (attempts in 0 until jump.size step 2) {
