@@ -91,7 +91,7 @@ fun dateStrToDigit(str: String): String {
     val dates = str.split(" ")
     var m = 0
     if (dates.size != 3) return ""
-    val day = dates[0].toIntOrNull()
+    val day = dates[0].toIntOrNull()!!
     val year = dates[2].toIntOrNull()!!
     if (day !in 1..31) return ""
     if (dates[1] in months)
@@ -118,24 +118,7 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String {
-    val dates = digital.split(".")
-    if (dates.size != 3) return ""
-    val day = dates[0].toIntOrNull()
-    val month = dates[1].toIntOrNull()!!
-    val year = dates[2].toIntOrNull()!!
-    val mon: String
-    try {
-        if (day !in 1..31) return ""
-        if (day != null) {
-            if (day > daysInMonth(month, year) || year < 0) return ""
-        }
-        mon = (months[month - 1])
-    } catch (e: NumberFormatException) {
-        return ""
-    }
-    return String.format("%d %s %d", day, mon, year)
-}
+fun dateDigitToStr(digital: String): String = TODO()
 
 
 /**
