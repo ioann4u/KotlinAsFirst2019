@@ -4,6 +4,7 @@ package lesson6.task1
 
 import lesson2.task2.daysInMonth
 import java.lang.NumberFormatException
+import kotlin.math.max
 
 val months = listOf(
     "января",
@@ -169,6 +170,7 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     var maxJump = -1
+    var i = 0
     val plus = "+"
     val jump = jumps.split(" ")
     if ((Regex("""[^\d\s-+%]""").find(jumps) != null) && (Regex("""[^a-zA-Z]""").find(jumps) != null))
@@ -178,6 +180,7 @@ fun bestHighJump(jumps: String): Int {
             val bestJump = jump[attempts].toInt()
             if ((bestJump >= maxJump) && (jump[attempts + 1] == plus))
                 maxJump = bestJump
+
         }
     } catch (e: NumberFormatException) {
     }
