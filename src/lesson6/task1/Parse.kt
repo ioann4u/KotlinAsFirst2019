@@ -92,17 +92,14 @@ fun dateStrToDigit(str: String): String {
     val dates = str.split(" ")
     var m = 0
     if (dates.size != 3) return ""
-    try {
-        val day = dates[0].toInt()
-        val year = dates[2].toInt()
-        if (day !in 1..31) return ""
-        if (dates[1] in months)
-            m = months.indexOf(dates[1]) + 1
-        if (day > daysInMonth(m, year) || year < 0 || m == 0) return ""
-        return String.format("%02d.%02d.%d", day, m, year)
-    } catch (e: NumberFormatException) {
-        return ""
-    }
+
+    val day = dates[0].toIntOrNull() ?: return ""
+    val year = dates[2].toIntOrNull() ?: return ""
+    if (day !in 1..31) return ""
+    if (dates[1] in months)
+        m = months.indexOf(dates[1]) + 1
+    if (day > daysInMonth(m, year) || year < 0 || m == 0) return ""
+    return String.format("%02d.%02d.%d", day, m, year)
 }
 
 
@@ -148,10 +145,10 @@ fun flattenPhoneNumber(phone: String): String = TODO()
 fun bestLongJump(jumps: String): Int {
     val attempts = jumps.split(" ")
     var maxJump = -1
-    if ((Regex("""[^\s\d-%]""").find(jumps) != null) && (Regex("""[^a-zA-Z]""").find(jumps) != null))
+    if (Regex("""[^\s\d-%]""").find(jumps) != null)
         return maxJump
     for (jump in attempts) {
-        if (jump.matches(Regex("""\d+[^\s-%]""")))
+        if (jump.matches(Regex("""\d+[^a-zA-Z\s-%]""")))
             maxJump = maxOf(maxJump, jump.toInt())
     }
     return maxJump
@@ -170,19 +167,14 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     var maxJump = -1
-    var i = 0
-    val plus = "+"
     val jump = jumps.split(" ")
-    if ((Regex("""[^\d\s-+%]""").find(jumps) != null) && (Regex("""[^a-zA-Z]""").find(jumps) != null))
+    if (Regex("""[^\d\s-+%]""").find(jumps) != null)
         return maxJump
-    try {
-        for (attempts in 0 until jump.size step 2) {
-            val bestJump = jump[attempts].toInt()
-            if ((bestJump >= maxJump) && (jump[attempts + 1] == plus))
-                maxJump = bestJump
 
-        }
-    } catch (e: NumberFormatException) {
+    for (attempts in 0 until jump.size step 2) {
+        val bestJump = jump[attempts].toIntOrNull() ?: return -1
+        if ((bestJump >= maxJump) && (jump[attempts + 1].contains("""+""")))
+            maxJump = bestJump
     }
     return maxJump
 }
@@ -213,15 +205,12 @@ fun firstDuplicateIndex(str: String): Int {
     val words = str.toLowerCase().split(" ")
     if (words.size < 2)
         return -1
-    try {
-        for (i in words.indices) {
+    for (i in words.indices) {
+        if (i in 0 until words.size - 1)
             when {
                 words[i] == words[i + 1] -> return pos
                 words[i] != words[i + 1] -> pos += words[i].length + 1
             }
-        }
-    } catch (e: IndexOutOfBoundsException) {
-
     }
     return -1
 }
@@ -238,22 +227,23 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    var result = ""
+    var result: String
     var maxValue = -1.0
     val products = description.split("; ")
-    if (products.isEmpty())
+    val prod = products[0].split(" ")
+    if (prod.size != 2)
         return ""
-    try {
-        for (i in products.indices) {
-            val product = products[i].split(" ")
-            val name = product[0]
-            val value = product[1].toDouble()
-            if (value > maxValue) {
-                result = name
-                maxValue = value
-            }
+    result = prod[0]
+
+    for (i in 1 until products.size) {
+        val product = products[i].split(" ")
+        if (product.size != 2) return ""
+        val name = product[0]
+        val value = product[1].toDoubleOrNull() ?: return ""
+        if (value > maxValue) {
+            result = name
+            maxValue = value
         }
-    } catch (e: IndexOutOfBoundsException) {
     }
     return result
 }
