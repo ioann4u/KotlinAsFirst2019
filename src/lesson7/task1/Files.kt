@@ -287,6 +287,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var i = true
     var b = true
     var s = true
+    var l = false
     for (line in File(inputName).readLines()) {
         if (line.isEmpty() && !p) {
             p = true
@@ -327,6 +328,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
         }
     }
     if (!p) outputStream.write("</p>")
+
     outputStream.write("</body>")
     outputStream.write("</html>")
     outputStream.close()
