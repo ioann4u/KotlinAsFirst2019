@@ -280,7 +280,56 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    outputStream.write("<html>")
+    outputStream.write("<body>")
+    var p = true
+    var i = true
+    var b = true
+    var s = true
+    for (line in File(inputName).readLines()) {
+        if (line.isEmpty() && !p) {
+            p = true
+            outputStream.write("</p>")
+        }
+        if (line.isNotEmpty() && p) {
+            outputStream.write("<p>")
+            p = false
+        }
+        for (words in line.split(" ")) {
+            var word = words
+            while ("**" in word)
+                if (b) {
+                    word = word.replaceFirst("**", "<b>")
+                    b = false
+                } else {
+                    word = word.replaceFirst("**", "</b>")
+                    b = true
+                }
+            while ("*" in word)
+                if (i) {
+                    word = word.replaceFirst("*", "<i>")
+                    i = false
+                } else {
+                    word = word.replaceFirst("*", "</i>")
+                    i = true
+                }
+
+            while ("~~" in word)
+                if (s) {
+                    word = word.replaceFirst("~~", "<s>")
+                    s = false
+                } else {
+                    word = word.replaceFirst("~~", "</s>")
+                    s = true
+                }
+            outputStream.write(word)
+        }
+    }
+    if (!p) outputStream.write("</p>")
+    outputStream.write("</body>")
+    outputStream.write("</html>")
+    outputStream.close()
 }
 
 /**
